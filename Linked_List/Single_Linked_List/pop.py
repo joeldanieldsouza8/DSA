@@ -1,0 +1,137 @@
+﻿class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+    def __str__(self):
+        return f"Node({self.value})"
+
+class LinkedList:
+    def __init__(self, value):
+        new_node = Node(value)
+        self.head = new_node
+        self.tail = new_node
+        self.length = 1
+
+    def __str__(self):
+        values = []
+        temp = self.head
+        while temp is not None:
+            values.append(str(temp.value))
+            temp = temp.next
+        return " -> ".join(values)
+
+    def print_list(self):
+        values = []
+        temp = self.head
+        while temp is not None:
+            values.append(str(temp.value))
+            temp = temp.next
+        values.append("None")
+        print(" -> ".join(values))
+
+    def append(self, value):
+        new_node = Node(value)
+        if self.length == 0:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail.next = new_node
+            self.tail = new_node
+        self.length += 1
+        return True
+
+    # Removes the last node from the list
+    def pop(self):
+        # Check if there are any nodes in list
+        if self.head is None:
+            return None
+
+        # Check if there is currently one node in the list
+        if self.length == 1:
+            curr_node = self.head
+
+            self.head = None
+            self.tail = None
+            self.length -= 1
+
+            return curr_node
+
+        else:
+            # Time complexity: O(1) - As we already know the location of the node's
+            # Space complexity: O(1) - As we are using only two pointers and not using any additional data structure to store data
+            curr_node = self.head
+            prev_node = None # This node represents the node behind the 'curr_node'
+
+            # Time complexity: O(n) - As we have to traverse through all the nodes in the single linked list
+            # Space complexity: O(1)
+            while curr_node.next is not None:
+                prev_node = curr_node
+                curr_node = curr_node.next
+
+            prev_node.next = None
+            self.tail = prev_node
+            self.length -= 1
+            return curr_node
+
+##########################################################
+##   Test code below will print output to "User logs"   ##
+##########################################################
+
+def check(expect, actual, message):
+    print(message)
+    print("EXPECTED:", expect)
+    print("RETURNED:", actual)
+    print("PASS" if expect == actual else "FAIL", "\n")
+
+
+print("\n----- Test: Pop on linked list with one node -----\n")
+linked_list = LinkedList(1)
+linked_list.print_list()
+popped_node = linked_list.pop()
+check(1, popped_node.value, "Value of popped node:")
+check(None, linked_list.head, "Head of linked list:")
+check(None, linked_list.tail, "Tail of linked list:")
+check(0, linked_list.length, "Length of linked list:")
+
+print("\n----- Test: Pop on linked list with multiple nodes -----\n")
+linked_list = LinkedList(1)
+linked_list.append(2)
+linked_list.append(3)
+linked_list.print_list()
+popped_node = linked_list.pop()
+check(3, popped_node.value, "Value of popped node:")
+check(1, linked_list.head.value, "Head of linked list:")
+check(2, linked_list.tail.value, "Tail of linked list:")
+check(2, linked_list.length, "Length of linked list:")
+
+print("\n----- Test: Pop on empty linked list -----\n")
+linked_list = LinkedList(1)
+linked_list.head = None
+linked_list.tail = None
+linked_list.length = 0
+popped_node = linked_list.pop()
+check(None, popped_node, "Popped node from empty linked list:")
+check(None, linked_list.head, "Head of linked list:")
+check(None, linked_list.tail, "Tail of linked list:")
+check(0, linked_list.length, "Length of linked list:")
+
+print("\n----- Test: Pop all -----\n")
+linked_list = LinkedList(1)
+linked_list.append(2)
+linked_list.print_list()
+popped_node = linked_list.pop()
+check(2, popped_node.value, "Value of popped node (first pop):")
+check(1, linked_list.head.value, "Head of linked list (after first pop):")
+check(1, linked_list.tail.value, "Tail of linked list (after first pop):")
+check(1, linked_list.length, "Length of linked list (after first pop):")
+popped_node = linked_list.pop()
+check(1, popped_node.value, "Value of popped node (second pop):")
+check(None, linked_list.head, "Head of linked list (after second pop):")
+check(None, linked_list.tail, "Tail of linked list (after second pop):")
+check(0, linked_list.length, "Length of linked list (after second pop):")
+popped_node = linked_list.pop()
+check(None, popped_node, "Popped node from empty linked list (third pop):")
+check(None, linked_list.head, "Head of linked list (after third pop):")
+check(None, linked_list.tail, "Tail of linked list (after third pop):")
+check(0, linked_list.length, "Length of linked list (after third pop):")
