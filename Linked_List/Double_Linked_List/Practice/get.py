@@ -103,6 +103,8 @@ class DoublyLinkedList:
     #
     #         return curr_node
 
+    # Time Complexity: O(n/2) ≈ O(n), the time complexity is much better because we have the search space based on close the index is to the start or end of the list
+    # Space Complexity: O(1), only using pointers
     def get(self, index: int):
         # Check if the index is out of bounds
         if index < 0 or index >= self.length:
