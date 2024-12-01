@@ -81,26 +81,46 @@ class DoublyLinkedList:
         self.length -= 1
         return temp
 
+    # This implementation is not the most efficient in terms of time complexity. If the index is closer to the start we can traverse from the 'head'. If the index is closer to the end we can traverse from the 'tail'
+    # def get(self, index: int):
+    #     # Check if the index is out of bounds
+    #     if index < 0 or index > self.length - 1:
+    #         return None
+    #
+    #     # Check if the index is at the start of the list
+    #     if index == 0:
+    #         return self.head
+    #
+    #     # Check if the index is at the end of the list
+    #     if index == self.length - 1:
+    #         return self.tail
+    #
+    #     else:
+    #         curr_node = self.head
+    #
+    #         for _ in range(index):
+    #             curr_node = curr_node.next
+    #
+    #         return curr_node
+
     def get(self, index: int):
         # Check if the index is out of bounds
-        if index < 0 or index > self.length - 1:
+        if index < 0 or index >= self.length:
             return None
 
-        # Check if the index is at the start of the list
-        if index == 0:
-            return self.head
-
-        # Check if the index is at the end of the list
-        if index == self.length - 1:
-            return self.tail
-
-        else:
-            curr_node = self.head
-
+        # Check if the index is closer to the start of the list
+        if index < self.length // 2:  # Using integer floor division
+            curr_node = self.head  # Start from the 'head'
             for _ in range(index):
                 curr_node = curr_node.next
 
-            return curr_node
+        else:
+            curr_node = self.tail
+            for _ in range(self.length - 1, index, -1): # range(start, stop, step)
+                curr_node = curr_node.prev
+
+        return curr_node
+
 
 my_doubly_linked_list = DoublyLinkedList(0)
 my_doubly_linked_list.append(1)
