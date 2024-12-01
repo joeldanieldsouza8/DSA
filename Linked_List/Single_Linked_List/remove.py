@@ -108,16 +108,16 @@ class LinkedList:
 
     def remove(self, index: int):
         # Check if the index is not out of bounds
-        if index < 0 or index >= self.length - 1:
+        if index < 0 or index > self.length - 1:
             return None
 
         # Check if the index is 0, which is the first node in the list
         if index == 0:
-            self.pop_first()
+            return self.pop_first()
 
         # Check if the index is the last node in the list
         if index == self.length - 1:
-            self.pop()
+            return self.pop()
 
         else:
             prev_node = self.get(index - 1)
