@@ -84,14 +84,18 @@ class DoublyLinkedList:
         return temp
 
     def set_value(self, index: int, value: int):
+        # Note, we don't need to perform this check as this check already happens in the 'get' method
         # Check if the index is out of bounds
-        if index < 0 or index >= self.length:
-            return False
+        # if index < 0 or index >= self.length:
+        #     return False
 
-        curr_node = self.get(index)
-        curr_node.value = value
+        curr_node: Node | None = self.get(index)
 
-        return True
+        if curr_node:
+            curr_node.value = value
+            return True
+
+        return False
 
 my_doubly_linked_list = DoublyLinkedList(11)
 my_doubly_linked_list.append(3)
