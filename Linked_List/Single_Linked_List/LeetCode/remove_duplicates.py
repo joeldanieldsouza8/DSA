@@ -49,7 +49,7 @@ class LinkedList:
             return
 
         seen_values = set()
-        curr_ptr = self.head
+        curr_ptr: Node | None = self.head
         prev_ptr: Node | None = None
 
         while curr_ptr:
