@@ -46,7 +46,7 @@ class LinkedList:
     def reverse_between(self, start_index: int, end_index: int):
         # Check if the index values are not out of bounds
         if (start_index < 0 or end_index < 0) or (start_index > self.length or end_index > self.length) or (self.head is None) or (start_index == end_index):
-            return
+            return None
 
         # Using the 'dummy_node' to handle edge case where we might want to swap the first and last node in the list
         dummy_node = Node(0)
@@ -66,11 +66,8 @@ class LinkedList:
 
         # This will loop until the node before the second node to be swapped
         for _ in range(num_nodes_to_reverse):
-            # Detach the node after curr_start_ptr
             temp: Node | None = curr_start_ptr.next
             curr_start_ptr.next = temp.next
-
-            # Move the detached node to the front of the section
             temp.next = prev_start_ptr.next
             prev_start_ptr.next = temp
 
