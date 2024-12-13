@@ -48,7 +48,7 @@ def is_balanced_parentheses(parenthesis: str):
     # Stack to keep track of opening parentheses
     temp_stack: List[str] = []
 
-    for index, char in enumerate(parenthesis):
+    for char in parenthesis:
         # If not a closing bracket (which means it's an opening bracket), then push the current bracket to the stack
         if char == '(':
             temp_stack.append(char)
