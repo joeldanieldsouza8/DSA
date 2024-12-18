@@ -8,15 +8,15 @@
             result.append(f"{i}: {val}")
         return str(result)
 
-    def print_table(self):
-        for i, val in enumerate(self.data_map):
-            print(i, ": ", val)
-
     def __hash(self, key):
         my_hash = 0
         for letter in key:
             my_hash = (my_hash + ord(letter) * 23) % len(self.data_map)
         return my_hash
+
+    def print_table(self):
+        for i, val in enumerate(self.data_map):
+            print(i, ": ", val)
 
     def set_item(self, key: str, value: int):
         index = self.__hash(key)
@@ -37,25 +37,31 @@
         # Add the new key-value pair as a nested list
         bucket.append([key, value])
 
+    def get_item(self, key: str):
+        index = self.__hash(key)
+        bucket = self.data_map[index]
+
+        if bucket is None:
+            return None
+
+        for i, (existing_key, existing_value) in enumerate(bucket):
+            if existing_key == key:
+                return existing_value
 
 my_hash_table = HashTable()
 
 my_hash_table.set_item('bolts', 1400)
-my_hash_table.set_item('bolts', 33)
 my_hash_table.set_item('washers', 50)
-my_hash_table.set_item('lumber', 70)
 
-my_hash_table.print_table()
+print('Bolts:', my_hash_table.get_item('bolts'))
+print('Washers:', my_hash_table.get_item('washers'))
+print('Lumber:', my_hash_table.get_item('lumber'))
 
 """
     EXPECTED OUTPUT:
     ----------------
-    0 :  None
-    1 :  None
-    2 :  None
-    3 :  None
-    4 :  [['bolts', 1400], ['washers', 50]]
-    5 :  None
-    6 :  [['lumber', 70]]
+    Bolts: 1400
+    Washers: 50
+    Lumber: None
 
 """
