@@ -1,13 +1,15 @@
 ﻿def two_sum(nums: list[int], target: int):
-    hash_table = {}
+    num_to_index = {}
 
     for index, num in enumerate(nums):
         complement = target - num
 
-        if complement in hash_table:
-            return [hash_table[complement], index]
+        # Check if the complement number exists in the hash table
+        if complement in num_to_index:
+            return [num_to_index[complement], index]
 
-        hash_table[num] = index
+        # Otherwise, add it to the hash table
+        num_to_index[num] = index
 
     return []
 
