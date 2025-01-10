@@ -14,34 +14,28 @@
     def __parent(self, index):
         return (index - 1) // 2
 
-    def __swap(self, current, parent):
-        self.heap[current], self.heap[parent] = self.heap[parent], self.heap[current]
+    def __swap(self, current_index, parent_index):
+        self.heap[current_index], self.heap[parent_index] = self.heap[parent_index], self.heap[current_index]
 
-    def __heapify(self):
-        """Performs Min-Heap"""
+    def __heapify_up(self):
+        current_index = len(self.heap) - 1
 
-        # Points to the INDEX of the last node in the tree
-        current = len(self.heap) - 1
+        # Continue to loop until the root node is reached
+        while current_index > 0:
+            parent_index = self.__parent(current_index)
 
-        # Continue swapping until the root node is reached
-        while current > 0:
-            # Find the INDEX of the PARENT node of the CURRENT node
-            parent = (current - 1) // 2
+            # If the parent is larger than the child, swap the values
+            if self.heap[parent_index] > self.heap[current_index]:
+                self.__swap(current_index, parent_index)
 
-            # Check if the value of the CURRENT node is smaller than the value of its PARENT node
-            if self.heap[current] < self.heap[parent]:
-                self.__swap(current, parent)
-                current = parent
-
-            else:
-                break
+            current_index = parent_index
 
     def insert(self, value: int):
         # insert the newNode at the end (last node from left to right.)
         self.heap.append(value)
 
         # heapify
-        self.__heapify()
+        self.__heapify_up()
 
 
 myheap = MinHeap()
