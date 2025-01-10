@@ -28,6 +28,10 @@
             if self.heap[parent_index] > self.heap[current_index]:
                 self.__swap(current_index, parent_index)
 
+            # Stop if the max-heap property is satisfied
+            else:
+                break
+
             current_index = parent_index
 
     def insert(self, value: int):
