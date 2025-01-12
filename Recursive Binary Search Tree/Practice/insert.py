@@ -22,7 +22,7 @@ class BinarySearchTree:
                 return "None"
             left = traverse(node.left)
             right = traverse(node.right)
-            return f"[Value: {node.value}, Left: {left}, Right: {right}]"
+            return f"(Value: {node.value}, Left: {left}, Right: {right}])"
 
         return f"BinarySearchTree: {traverse(self.root)}"
 
