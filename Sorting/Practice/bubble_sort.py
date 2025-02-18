@@ -7,7 +7,7 @@
         swapped = False
 
         # The inner loop will swap the values, based on the condition, for the current pass through the list
-        # With each pass the traversal reduces by 1 because the elements towards the end of the list are sorted
+        # With each pass, the traversal through the (entire) list reduces by 1 because the elements towards the end of the list are sorted
         for j in range(n - 1 - i):
             if nums[j] > nums[j + 1]:
                 nums[j], nums[j + 1] = nums[j + 1], nums[j]
