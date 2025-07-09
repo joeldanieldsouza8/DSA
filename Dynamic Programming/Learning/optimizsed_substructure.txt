@@ -1,0 +1,3 @@
+# Optimized Substructure
+
+# To calculate the result of solving a sub-problem we need to account for a sub-structure that best describes the optimal solution.
