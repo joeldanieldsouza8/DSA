@@ -6,14 +6,17 @@ def min_package_weights(package_weights: list[int], min_weight: int) -> float:
     if not package_weights:
         return 0
 
-    start_pointer = (
-        0  # Store the index position of the element at the start of the window
-    )
-    end_pointer = 0  # Store the index position of the current element in the list
+    # Store the index position of the element at the start of the window
+    start_pointer = 0  
+    
+    # Store the index position of the current element in the list
+    # end_pointer = 0
 
-    current_window_sum = 0  # Store the sum of all elements in the window
+    # Store the sum of all elements in the window
+    current_window_sum = 0  
 
-    best_min_length = math.inf # Initialise to positive infinity. If 0 was initialised it would always be the minimum
+    # Initialise to positive infinity. If 0 was initialised it would always be the minimum
+    best_min_length = math.inf 
 
     # Iterate through the entire list, until the end of the list is reached
     for end_pointer in range(len(package_weights)):
@@ -31,7 +34,7 @@ def min_package_weights(package_weights: list[int], min_weight: int) -> float:
             # Remove the element at the start of the window
             current_window_sum -= package_weights[start_pointer]
 
-            # Shorten the length of the window from the start
+            # Shrink the window from the start
             start_pointer += 1
 
     # Check if there were any items that met the min length
