@@ -1,25 +1,31 @@
-﻿class Node:
-    def __init__(self, value):
+﻿from functools import wraps
+from typing import Any, Callable, List, Optional
+
+
+class Node:
+    def __init__(self, value: int):
         self.value = value
-        self.next = None
+        self.next: Optional[Node] = None
 
-    def __str__(self):
+    def __repr__(self) -> str:
         return f"Node({self.value})"
-
-
+        
 class LinkedList:
-    def __init__(self, value):
+    def __init__(self, value: int):
         new_node = Node(value)
-        self.head = new_node
+
+        self.head: Optional[Node] = new_node
         self.length = 1
 
-    def __str__(self):
-        values = []
-        temp = self.head
-        while temp is not None:
-            values.append(str(temp.value))
-            temp = temp.next
-        return " -> ".join(values)
+    def __repr__(self) -> str:
+        nodes: List[str] = []
+        current = self.head
+
+        while current:
+            nodes.append(f"Node({current.value})")
+            current = current.next
+
+        return f"LinkedList({nodes})"
 
     def append(self, value):
         new_node = Node(value)
@@ -32,46 +38,54 @@ class LinkedList:
             current.next = new_node
         self.length += 1
         return True
-
+    
     def print_list(self):
+        values = []
         temp = self.head
         while temp is not None:
-            print(temp.value)
+            values.append(str(temp.value))
             temp = temp.next
-
+        result = " -> ".join(values) if values else "Empty"
+        print(result + " -> None")
+        return result    
+            
     def make_empty(self):
         self.head = None
         self.length = 0
 
     def reverse_between(self, start_index: int, end_index: int):
-        # Check if the index values are not out of bounds
-        if (start_index < 0 or end_index < 0) or (start_index > self.length or end_index > self.length) or (self.head is None) or (start_index == end_index):
-            return None
+        # Check if the list is empty, has one nodee, or the indices are invalid/the same
+        if self.length <= 1 or start_index >= end_index:
+            return
+        
+        # The 'dummy' node keeps track of the 'head' pointer in the list
+        dummy = Node(0)
+        dummy.next = self.head
 
-        # Using the 'dummy_node' to handle edge case where we might want to swap the first and last node in the list
-        dummy_node = Node(0)
-        dummy_node.next = self.head
+        left_prev = dummy
 
-        prev_start_ptr: Node | None = dummy_node # The 'prev' pointer is always one behind the 'curr' pointer
-        # curr_start_ptr = self.head
-
-        # This will loop until the node before the first node to be swapped
         for _ in range(start_index):
-            prev_start_ptr = prev_start_ptr.next
+            left_prev = left_prev.next
+        
+        curr = left_prev.next
 
-        curr_start_ptr: Node | None = prev_start_ptr.next # Points to the first node to be swapped
+        total_number_of_nodes_to_reverse = end_index - start_index + 1
 
-        # Calculate the number of nodes to reverse
-        num_nodes_to_reverse = end_index - start_index
+        prev = None
 
-        # This will loop until the node before the second node to be swapped
-        for _ in range(num_nodes_to_reverse):
-            temp: Node | None = curr_start_ptr.next
-            curr_start_ptr.next = temp.next
-            temp.next = prev_start_ptr.next
-            prev_start_ptr.next = temp
+        for _ in range(total_number_of_nodes_to_reverse):
+            temp_next = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp_next
 
-        self.head = dummy_node.next
+        # Update pointers
+        left_prev.next.next = curr
+        left_prev.next = prev
+
+        # Re-assign the 'head' pointer to point at the correct node
+        self.head = dummy.next
+
 
 linked_list = LinkedList(1)
 linked_list.append(2)
@@ -99,7 +113,7 @@ linked_list.print_list()
 
 # Reverse an empty linked list
 empty_list = LinkedList(0)
-empty_list.make_empty
+empty_list.make_empty()
 empty_list.reverse_between(0, 0)
 print("Reversed empty linked list: ")
 empty_list.print_list()
@@ -108,30 +122,14 @@ empty_list.print_list()
     EXPECTED OUTPUT:
     ----------------
     Original linked list: 
-    1
-    2
-    3
-    4
-    5
+    1 -> 2 -> 3 -> 4 -> 5 -> None
     Reversed sublist (2, 4): 
-    1
-    2
-    5
-    4
-    3
+    1 -> 2 -> 5 -> 4 -> 3 -> None
     Reversed entire linked list: 
-    3
-    4
-    5
-    2
-    1
+    3 -> 4 -> 5 -> 2 -> 1 -> None
     Reversed sublist of length 1 (3, 3): 
-    3
-    4
-    5
-    2
-    1
+    3 -> 4 -> 5 -> 2 -> 1 -> None
     Reversed empty linked list: 
-    None
-
+    Empty -> None
+    
 """
