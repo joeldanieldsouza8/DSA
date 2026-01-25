@@ -1,5 +1,0 @@
-# Overlapping Sub-problems 
-
-# One problem can be broken down into many smaller sub-problems.
-# The same sub-problem can be repeated many times.
-# When all the sub-problems are solved they are put back together to make the one big solved problem. This process is called 'memoization'.
